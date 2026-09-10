@@ -1,28 +1,26 @@
 def call() {
 
     stage('Build') {
-        echo 'Starting Build...'
+
+        echo 'Starting Maven Build'
 
         sh '''
-            echo "Running Linux commands"
-            echo "Current directory:"
-            pwd
-
-            echo "Files in workspace:"
+            echo "Checking files..."
             ls -la
+
+            echo "Running Maven build..."
+            mvn clean package -DskipTests
         '''
 
-        echo 'Build completed successfully'
+        echo 'Maven build completed'
     }
 
     stage('Test') {
-        echo 'Starting Test...'
 
-        sh '''
-            echo "Running test..."
-            echo "Test passed!"
-        '''
+        echo 'Running Unit Tests'
 
-        echo 'Test completed successfully'
+        sh 'mvn test'
+
+        echo 'Unit Tests completed'
     }
 }
